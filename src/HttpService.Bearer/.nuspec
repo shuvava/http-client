@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+    <metadata>
+        <!-- The identifier that must be unique within the hosting gallery -->
+        <id>HttpService.Bearer</id>
+
+        <!-- The package version number that is used when resolving dependencies -->
+        <version>1.0.0</version>
+
+        <!-- Authors contain text that appears directly on the gallery -->
+        <authors>Vladimir Shurygin</authors>
+
+        <!--
+            Owners are typically nuget.org identities that allow gallery
+            users to easily find other packages by the same owners.
+        -->
+        <owners>shuvava</owners>
+
+        <projectUrl>https://github.com/shuvava/http-client</projectUrl>
+
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+        <description>Http REST Client with Bearer authorization</description>
+
+
+        <!-- Tags appear in the gallery and can be used for tag searches -->
+        <tags>HttpClient http abstractions</tags>
+        <!-- Dependencies are automatically installed when the package is installed -->
+        <dependencies>
+            <dependency id="Newtonsoft.Json" version="9.0.1" />
+            <dependency id="Microsoft.Extensions.Options" version="2.1.1" />
+            <dependency id="HttpService" version="1.0.0" />
+            <dependency id="HttpService.Abstractions" version="1.0.0" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="HttpService.Bearer.dll" target="lib\netstandard2.0" />
+        <file src="HttpService.Bearer.pdb" target="lib\netstandard2.0" />
+    </files>
+</package>
