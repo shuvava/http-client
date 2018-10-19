@@ -8,7 +8,7 @@
         <version>1.0.0</version>
 
         <!-- Authors contain text that appears directly on the gallery -->
-        <authors>Vladimir Shurygin</authors>
+        <authors>shuvava</authors>
 
         <!--
             Owners are typically nuget.org identities that allow gallery
@@ -16,11 +16,12 @@
         -->
         <owners>shuvava</owners>
 
+        <licenseUrl>https://raw.githubusercontent.com/shuvava/http-client/master/LICENSE</licenseUrl>
         <projectUrl>https://github.com/shuvava/http-client</projectUrl>
 
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
-        <description>Http REST Client with Bearer authorization</description>
+        <description>HTTP REST Client with Bearer authorization</description>
 
 
         <!-- Tags appear in the gallery and can be used for tag searches -->
