@@ -2,15 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-      <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-      <Description>Http REST Client abstractions for HttpClient</Description>
-      <Copyright>WorkSafe BC</Copyright>
     <LangVersion>latest</LangVersion>
-    <PackageProjectUrl>https://wcbbc.visualstudio.com/DevOps-Prevention/_git/WS.NOP.Common</PackageProjectUrl>
-    <RepositoryUrl>https://wcbbc.visualstudio.com/DevOps-Prevention/_git/WS.NOP.Common</RepositoryUrl>
-    <PackageTags>HttpClient</PackageTags>
-    <Authors>Vladimir Shurygin&lt;Vladimir.Shurygin@worksafebc.com&gt;</Authors>
-    <Company>WorkSafe BC</Company>
   </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

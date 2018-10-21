@@ -11,7 +11,8 @@
         <authors>shuvava</authors>
 
 
-        https://raw.githubusercontent.com/shuvava/http-client/master/LICENSE
+        <owners>shuvava</owners>
+        <licenseUrl>https://raw.githubusercontent.com/shuvava/http-client/master/LICENSE</licenseUrl>
         <projectUrl>https://github.com/shuvava/http-client</projectUrl>
 
         <requireLicenseAcceptance>false</requireLicenseAcceptance>

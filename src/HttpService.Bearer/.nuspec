@@ -8,8 +8,7 @@
         <version>1.0.0</version>
 
         <!-- Authors contain text that appears directly on the gallery -->
-        <authors>shuvava</authors>
-
+        <owners>shuvava</owners>
         <licenseUrl>https://raw.githubusercontent.com/shuvava/http-client/master/LICENSE</licenseUrl>
         <projectUrl>https://github.com/shuvava/http-client</projectUrl>
 
