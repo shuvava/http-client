@@ -10,11 +10,6 @@
         <!-- Authors contain text that appears directly on the gallery -->
         <authors>shuvava</authors>
 
-        <!--
-            Owners are typically nuget.org identities that allow gallery
-            users to easily find other packages by the same owners.
-        -->
-        <owners>shuvava</owners>
 
         https://raw.githubusercontent.com/shuvava/http-client/master/LICENSE
         <projectUrl>https://github.com/shuvava/http-client</projectUrl>
