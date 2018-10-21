@@ -8,6 +8,9 @@
         <version>1.0.0</version>
 
         <!-- Authors contain text that appears directly on the gallery -->
+        <authors>shuvava</authors>
+
+
         <owners>shuvava</owners>
         <licenseUrl>https://raw.githubusercontent.com/shuvava/http-client/master/LICENSE</licenseUrl>
         <projectUrl>https://github.com/shuvava/http-client</projectUrl>
@@ -18,8 +21,7 @@
 
 
         <!-- Tags appear in the gallery and can be used for tag searches -->
-        <tags>HttpClient http abstractions</tags>
-        <!-- Dependencies are automatically installed when the package is installed -->
+        <tags>HTTP REST Client Bearer auth</tags>
         <dependencies>
             <dependency id="Newtonsoft.Json" version="9.0.1" />
             <dependency id="Microsoft.Extensions.Options" version="2.1.1" />
