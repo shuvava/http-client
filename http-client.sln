@@ -5,17 +5,19 @@ VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpService.Abstractions", "src\HttpService.Abstractions\HttpService.Abstractions.csproj", "{5051CE03-13DC-4568-9717-435F51FF3972}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpService", "src\HttpService\HttpService.csproj", "{5BDBBF43-E243-4B89-ACE2-A7E1083CABCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpService", "src\HttpService\HttpService.csproj", "{5BDBBF43-E243-4B89-ACE2-A7E1083CABCF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EC654BD6-9474-4F94-866D-5911EF00FF57}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{425B7122-E7DE-458C-BB07-3909991EDAF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpServiceUnitTests", "tests\HttpServiceUnitTests\HttpServiceUnitTests.csproj", "{49E0188E-F302-4B59-9CA4-82289C54F52C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpServiceUnitTests", "tests\HttpServiceUnitTests\HttpServiceUnitTests.csproj", "{49E0188E-F302-4B59-9CA4-82289C54F52C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpService.Example", "examples\HttpService.Example\HttpService.Example.csproj", "{B9B4C208-C411-4D52-B16A-07A4AC94D1B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpService.Bearer", "src\HttpService.Bearer\HttpService.Bearer.csproj", "{EF5FDA83-3EDF-4E79-8935-61D38E541FE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpService.Bearer", "src\HttpService.Bearer\HttpService.Bearer.csproj", "{EF5FDA83-3EDF-4E79-8935-61D38E541FE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpService.MemoryConsumption", "examples\HttpService.MemoryConsumption\HttpService.MemoryConsumption.csproj", "{50EEAA9A-1DAC-4A55-9188-258080F0CBD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{EF5FDA83-3EDF-4E79-8935-61D38E541FE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF5FDA83-3EDF-4E79-8935-61D38E541FE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF5FDA83-3EDF-4E79-8935-61D38E541FE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50EEAA9A-1DAC-4A55-9188-258080F0CBD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50EEAA9A-1DAC-4A55-9188-258080F0CBD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50EEAA9A-1DAC-4A55-9188-258080F0CBD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50EEAA9A-1DAC-4A55-9188-258080F0CBD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{49E0188E-F302-4B59-9CA4-82289C54F52C} = {EC654BD6-9474-4F94-866D-5911EF00FF57}
 		{B9B4C208-C411-4D52-B16A-07A4AC94D1B0} = {425B7122-E7DE-458C-BB07-3909991EDAF3}
+		{50EEAA9A-1DAC-4A55-9188-258080F0CBD4} = {425B7122-E7DE-458C-BB07-3909991EDAF3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F77BA10-6406-4FF9-9803-9B6347DD5BCC}
