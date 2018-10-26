@@ -16,8 +16,8 @@ namespace HttpService.MemoryConsumption
 {
     internal class Program
     {
-        //const string Url = "https://github.com/tugberkugurlu/ASPNETWebAPISamples/archive/master.zip";
-        const string Url = "https://codeload.github.com/tensorflow/models/zip/master";
+        const string Url = "https://github.com/tugberkugurlu/ASPNETWebAPISamples/archive/master.zip";
+        //const string Url = "https://codeload.github.com/tensorflow/models/zip/master";
 
         // ReSharper disable once UnusedParameter.Local
         private static async Task Main(string[] args)
@@ -31,18 +31,8 @@ namespace HttpService.MemoryConsumption
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
             await HttpGetForLargeFileInWrongWay().ConfigureAwait(false);
-            finalByteCount = GC.GetTotalMemory(true);
-            Console.WriteLine($"Final bytes count {finalByteCount:n0}");
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
             //await HttpServiceLibrary(httpClient).ConfigureAwait(false);
-            //finalByteCount = GC.GetTotalMemory(true);
-            //Console.WriteLine($"Final bytes count {finalByteCount:n0}");
-            //Console.WriteLine("Press any key to continue...");
-            //Console.ReadKey();
-            await HttpGetForLargeFileInRightWay().ConfigureAwait(false);
-            finalByteCount = GC.GetTotalMemory(true);
-            Console.WriteLine($"Final bytes count {finalByteCount:n0}");
+            //await HttpGetForLargeFileInRightWay().ConfigureAwait(false);
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
@@ -69,6 +59,10 @@ namespace HttpService.MemoryConsumption
                     response.Content = null;
                 }
             }
+            var finalByteCount = GC.GetTotalMemory(true);
+            Console.WriteLine($"Final bytes count {finalByteCount:n0}");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
 
         private static async Task HttpGetForLargeFileInRightWay()
@@ -86,22 +80,29 @@ namespace HttpService.MemoryConsumption
                     }
                 }
             }
+            var finalByteCount = GC.GetTotalMemory(true);
+            Console.WriteLine($"Final bytes count {finalByteCount:n0}");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
 
 
-        //private static async Task HttpServiceLibrary(IRestClient httpClient)
-        //{
-        //    Console.WriteLine($"    using {nameof(HttpServiceLibrary)}");
-        //    using (var streamToReadFrom = await httpClient.GetAsync<Stream>(Url))
-        //    {
-        //        string fileToWriteTo = Path.GetTempFileName();
-        //        using (Stream streamToWriteTo = File.Open(fileToWriteTo, FileMode.Create))
-        //        {
-        //            await streamToReadFrom.CopyToAsync(streamToWriteTo);
-        //        }
-        //    }
-
-        //}
+        private static async Task HttpServiceLibrary(IRestClient httpClient)
+        {
+            Console.WriteLine($"    using {nameof(HttpServiceLibrary)}");
+            using (var streamToReadFrom = await httpClient.GetAsync<Stream>(Url))
+            {
+                string fileToWriteTo = Path.GetTempFileName();
+                using (Stream streamToWriteTo = File.Open(fileToWriteTo, FileMode.Create))
+                {
+                    await streamToReadFrom.CopyToAsync(streamToWriteTo);
+                }
+            }
+            var finalByteCount = GC.GetTotalMemory(true);
+            Console.WriteLine($"Final bytes count {finalByteCount:n0}");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
 
         private static IServiceProvider ServiceProviderFactory()
         {

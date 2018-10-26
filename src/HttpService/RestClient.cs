@@ -11,18 +11,18 @@ namespace HttpService
 {
     public class RestClient : HttpServiceClient, IRestClient
     {
-        private readonly ISerializer _serializer;
-
-
         protected readonly MediaTypeWithQualityHeaderValue ContentType =
             new MediaTypeWithQualityHeaderValue("application/json");
+
+
+        protected readonly ISerializer Serializer;
 
 
         public RestClient(
             HttpClient client,
             ISerializer serializer) : base(client)
         {
-            _serializer = serializer;
+            Serializer = serializer;
         }
 
 
@@ -37,7 +37,7 @@ namespace HttpService
         public async Task<TResponse> PostAsync<TRequest, TResponse>(string url, TRequest requestData,
             CancellationToken token = default)
         {
-            var content = _serializer.Serialize<TRequest>(requestData);
+            var content = Serializer.Serialize<TRequest>(requestData);
 
             using (var httpContent = Serialize(content, ContentType))
             {
@@ -59,7 +59,7 @@ namespace HttpService
         public async Task<TResponse> PutAsync<TRequest, TResponse>(string url, TRequest requestData,
             CancellationToken token = default)
         {
-            var content = _serializer.Serialize<TRequest>(requestData);
+            var content = Serializer.Serialize<TRequest>(requestData);
 
             using (var httpContent = Serialize(content, ContentType))
             {
@@ -81,6 +81,7 @@ namespace HttpService
             CancellationToken token = default)
         {
             await AddRequestHeadersAsync(httpRequest.Headers).ConfigureAwait(false);
+
             var result = await SendAsync(httpRequest, token).ConfigureAwait(false);
 
             if (result == null)
@@ -88,7 +89,7 @@ namespace HttpService
                 return default;
             }
 
-            return (TResponse) _serializer.Deserialize(result, typeof(TResponse));
+            return (TResponse) Serializer.Deserialize(result, typeof(TResponse));
         }
     }
 }

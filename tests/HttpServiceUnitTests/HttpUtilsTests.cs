@@ -6,7 +6,7 @@ using HttpService;
 namespace HttpServiceUnitTests
 {
     [TestClass]
-    public class HttUtilsTests
+    public class HttpUtilsTests
     {
         [TestMethod]
         public void JoinUrls_WithOutTrailSlash()

@@ -9,6 +9,9 @@ using Newtonsoft.Json;
 using HttpService;
 using HttpService.Abstractions.Exceptions;
 using HttpService.Serializers;
+// ReSharper disable ClassNeverInstantiated.Local
+// ReSharper disable UnusedAutoPropertyAccessor.Local
+// ReSharper disable UnusedMember.Local
 
 
 namespace HttpServiceUnitTests.Integration
@@ -96,7 +99,7 @@ namespace HttpServiceUnitTests.Integration
             //act
             try
             {
-                var result = await srv.PostAsync<Register, RegisterResponse>(url, model).ConfigureAwait(false);
+                await srv.PostAsync<Register, RegisterResponse>(url, model).ConfigureAwait(false);
             }
             catch (HttpException ex)
             {
