@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
 using Polly;
+using Polly.Extensions.Http;
 using Polly.Timeout;
 
 
@@ -52,30 +53,29 @@ namespace HttpService.ExampleWithPolly
 
             //https://github.com/App-vNext/Polly
             // set custom timeout
-            var timeoutPolicy = Policy
-                .TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(4));
-            var retryPolicy = Policy
-                .Handle<Exception>()
-                .RetryAsync(3, (exception, retryCount) =>
+
+            //var retryWithTimeout = retryPolicy.Wrap(timeoutPolicy);
+            var itrattionNum = 0;
+            var retryPolicy = HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .Or<TimeoutRejectedException>() // thrown by Polly's TimeoutPolicy if the inner call times out
+                .WaitAndRetryAsync(new[]
                 {
-                    Console.WriteLine($"Something go wrong retry number{retryCount}");
+                    TimeSpan.FromSeconds(1),
+                    TimeSpan.FromSeconds(5),
+                    TimeSpan.FromSeconds(10)
+                }, (result, span) =>
+                {
+                    Console.WriteLine("Timeout => Retry");
                 });
 
-            var retryWithTimeout = retryPolicy.Wrap(timeoutPolicy);
+            var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(() => TimeSpan.FromSeconds(4+ itrattionNum++));
 
-            //services
-            //    .AddHttpClient<IRestClient, RestClient>()
-            //    .AddPolicyHandler(timeoutPolicy);
             //https://github.com/App-vNext/Polly/wiki/Polly-and-HttpClientFactory
             services
                 .AddHttpClient<IRestClient, RestClient>()
-                .AddTransientHttpErrorPolicy(builder => builder
-                    .RetryAsync(3,
-                    (exception, retryCount) =>
-                    {
-                        Console.WriteLine($"Something go wrong retry number{retryCount}");
-                    })
-                );
+                .AddPolicyHandler(retryPolicy)
+                .AddPolicyHandler(timeoutPolicy);
 
             return services.BuildServiceProvider();
         }

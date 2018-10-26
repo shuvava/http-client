@@ -35,6 +35,7 @@ namespace HttpService.ConnectionLeak
                 using (var client = new HttpClient())
                 {
                     await client.GetStringAsync("https://habr.com").ConfigureAwait(false);
+                    Console.WriteLine("Ok");
                 }
             }
         }
