@@ -30,6 +30,7 @@ namespace HttpService.Example
                 Console.WriteLine($"FirstName: {user.FirstName}; LastName:{user.LastName}");
             }
 
+            Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
 
@@ -40,6 +41,46 @@ namespace HttpService.Example
             services.AddSingleton<ISerializer, JsonRestSerializer>();
             services.AddHttpClient<IRestClient, RestClient>();
 
+            #region custom_factory
+            //services.AddHttpClient<IRestClient, RestClient>(client =>
+            //{
+            //    client.BaseAddress = new Uri("https://api.github.com/");
+            //    client.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
+            //    client.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactoryTesting");
+            //});
+            #endregion
+
+            #region custom_factory_named
+            // custom factory named
+            //services.AddHttpClient<IRestClient, RestClient>("GitHubClient", client =>
+            //{
+            //    client.BaseAddress = new Uri("https://api.github.com/");
+            //    client.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
+            //    client.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactoryTesting");
+            //});
+
+            //usage
+            /***
+            public class ValuesController : Controller
+            {
+                private readonly IHttpClientFactory _httpClientFactory;
+
+                public ValuesController(IHttpClientFactory httpClientFactory)
+                {
+                    _httpClientFactory = httpClientFactory;
+                }
+
+                [HttpGet]
+                public async Task<ActionResult> Get()
+                {
+                    var client = _httpClientFactory.CreateClient("GitHubClient");
+                    var result = await client.GetStringAsync("/");
+
+                    return Ok(result);
+                }
+            }
+             */
+            #endregion
             return services.BuildServiceProvider();
         }
 
