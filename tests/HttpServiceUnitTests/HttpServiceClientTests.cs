@@ -67,7 +67,6 @@ namespace HttpServiceUnitTests
         {
             //arrange
             var srv = new HttpServiceClient(HttpClientFactory.CreateHttpClient());
-            var str = "Hello World!";
 
             //act
             var result = srv.Serialize(new object());
