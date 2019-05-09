@@ -27,7 +27,7 @@ namespace HttpService.Serializers
                     MissingMemberHandling = MissingMemberHandling.Ignore
                 };
 
-                _settings.Converters.Add(new StringEnumConverter {CamelCaseText = true});
+                _settings.Converters.Add(new StringEnumConverter {NamingStrategy = new CamelCaseNamingStrategy()});
             }
         }
 

@@ -71,7 +71,7 @@ namespace HttpServiceUnitTests.Integration
 
             var model = new Register
             {
-                Email = "test@test.test",
+                Email = "eve.holt@reqres.in",
                 Password = "1"
             };
 
