@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -6,12 +5,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using HttpService;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Moq;
 using Moq.Protected;
-
-using HttpService;
 
 
 namespace HttpServiceUnitTests
@@ -37,13 +36,14 @@ namespace HttpServiceUnitTests
             //arrange
             var srv = new HttpServiceClient(HttpClientFactory.CreateHttpClient());
             var str = "Hello World!";
-            byte[] content = Encoding.ASCII.GetBytes(str);
+            var content = Encoding.ASCII.GetBytes(str);
             //act
             var result = srv.Serialize(content);
             //assert
             Assert.IsNotNull(result);
             Assert.AreEqual(typeof(ByteArrayContent), result.GetType());
         }
+
 
         [TestMethod]
         public void SerializeStream()
@@ -61,6 +61,7 @@ namespace HttpServiceUnitTests
                 Assert.AreEqual(typeof(StreamContent), result.GetType());
             }
         }
+
 
         [TestMethod]
         public void SerializeIncompatibleContent()
@@ -104,6 +105,7 @@ namespace HttpServiceUnitTests
             //assert
             Assert.IsNull(result);
         }
+
 
         [TestMethod]
         public async Task ProcessResponseAsStream_NotFoundResponse()
@@ -161,6 +163,7 @@ namespace HttpServiceUnitTests
                 .Verifiable();
 
             var srv = new HttpServiceClient(new HttpClient(handlerMock.Object));
+
             //act
             using (var request = srv.CreateRequest(HttpMethod.Post, "https://mock/users"))
             {
@@ -169,6 +172,7 @@ namespace HttpServiceUnitTests
                 Assert.IsNull(result);
             }
         }
+
 
         [TestMethod]
         public async Task GetResponseAsStream_NoContentResponse()
@@ -193,6 +197,7 @@ namespace HttpServiceUnitTests
                 .Verifiable();
 
             var srv = new HttpServiceClient(new HttpClient(handlerMock.Object));
+
             //act
             using (var request = srv.CreateRequest(HttpMethod.Post, "https://mock/users"))
             {
@@ -233,6 +238,7 @@ namespace HttpServiceUnitTests
             //assert
             Assert.IsNull(result);
         }
+
 
         [TestMethod]
         public async Task GetResponseAsStream_NotModifiedResponse()
@@ -296,6 +302,7 @@ namespace HttpServiceUnitTests
             Assert.IsNull(result);
         }
 
+
         [TestMethod]
         public async Task GetResponseAsStream_NullResponse()
         {
@@ -357,6 +364,7 @@ namespace HttpServiceUnitTests
             //assert
             Assert.IsTrue(string.IsNullOrEmpty(result));
         }
+
 
         [TestMethod]
         public async Task GetResponseAsStream_EmptyResponse()
@@ -420,6 +428,7 @@ namespace HttpServiceUnitTests
             Assert.IsFalse(string.IsNullOrEmpty(result));
         }
 
+
         [TestMethod]
         public async Task GetResponseAsStreamAsync_OkResponse()
         {
@@ -449,13 +458,11 @@ namespace HttpServiceUnitTests
 
             using (var stream = await srv.GetResponseAsStreamAsync(request).ConfigureAwait(false))
             {
-                StreamReader reader = new StreamReader(stream);
-                string result = reader.ReadToEnd();
+                var reader = new StreamReader(stream);
+                var result = reader.ReadToEnd();
                 //assert
                 Assert.AreEqual(str, result);
-
             }
         }
-
     }
 }
