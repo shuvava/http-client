@@ -1,12 +1,10 @@
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
 using HttpService.Abstractions;
-using HttpService.Abstractions.Exceptions;
 
 
 namespace HttpService
@@ -67,7 +65,8 @@ namespace HttpService
             HttpMethod httpMethod,
             string absoluteUrl,
             HttpContent content = default,
-            MediaTypeWithQualityHeaderValue acceptedContentType = default)
+            MediaTypeWithQualityHeaderValue acceptedContentType = default,
+            AuthenticationHeaderValue authHeader = default)
         {
             var httpReq = new HttpRequestMessage(httpMethod, absoluteUrl);
             httpReq.Headers.Clear();
@@ -75,6 +74,11 @@ namespace HttpService
             if (acceptedContentType != null)
             {
                 httpReq.Headers.Accept.Add(acceptedContentType);
+            }
+
+            if (authHeader != null)
+            {
+                httpReq.Headers.Authorization = authHeader;
             }
 
             if (HttpUtils.HasRequestBody(httpMethod) && content != null)
@@ -88,31 +92,16 @@ namespace HttpService
 
         public async Task<string> ProcessResponseAsync(HttpResponseMessage response)
         {
-            if (response.StatusCode == HttpStatusCode.NotFound
-                || response.StatusCode == HttpStatusCode.NoContent
-                || response.StatusCode == HttpStatusCode.NotModified)
+            HttpUtils.AssertResponse(response);
+
+            if (!HttpUtils.ResponseHasContent(response))
             {
                 return default;
             }
 
-            var content = default(string);
+            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            if (
-                (response.Content.Headers.ContentLength != null && response.Content.Headers.ContentLength.Value > 0)
-                || response.Content.Headers.ContentType != null
-                )
-            {
-                content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            }
-
-            if (response.IsSuccessStatusCode)
-            {
-                return content;
-            }
-
-            response.Content?.Dispose();
-
-            throw new HttpException(response.StatusCode, response.ReasonPhrase, content);
+            return content;
         }
 
 

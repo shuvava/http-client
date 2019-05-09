@@ -26,11 +26,14 @@ namespace HttpService
         }
 
 
-        public Task<TResponse> GetAsync<TResponse>(string url, CancellationToken token = default)
+        public async Task<TResponse> GetAsync<TResponse>(string url, CancellationToken token = default)
         {
-            var request = CreateRequest(HttpMethod.Get, url, null, ContentType);
+            using (var request = CreateRequest(HttpMethod.Get, url, null, ContentType))
+            {
+                return await SendAsync<TResponse>(request, token).ConfigureAwait(false);
+            }
 
-            return SendAsync<TResponse>(request, token);
+
         }
 
 
@@ -40,19 +43,20 @@ namespace HttpService
             var content = Serializer.Serialize<TRequest>(requestData);
 
             using (var httpContent = Serialize(content, ContentType))
+            using(var request = CreateRequest(HttpMethod.Post, url, httpContent, ContentType))
             {
-                var request = CreateRequest(HttpMethod.Post, url, httpContent, ContentType);
 
                 return await SendAsync<TResponse>(request, token).ConfigureAwait(false);
             }
         }
 
 
-        public Task<TResponse> DeleteAsync<TResponse>(string url, CancellationToken token = default)
+        public async Task<TResponse> DeleteAsync<TResponse>(string url, CancellationToken token = default)
         {
-            var request = CreateRequest(HttpMethod.Delete, url, null, ContentType);
-
-            return SendAsync<TResponse>(request, token);
+            using (var request = CreateRequest(HttpMethod.Delete, url, null, ContentType))
+            {
+                return await SendAsync<TResponse>(request, token).ConfigureAwait(false);
+            }
         }
 
 
@@ -62,9 +66,8 @@ namespace HttpService
             var content = Serializer.Serialize<TRequest>(requestData);
 
             using (var httpContent = Serialize(content, ContentType))
+            using(var request = CreateRequest(HttpMethod.Put, url, httpContent, ContentType))
             {
-                var request = CreateRequest(HttpMethod.Put, url, httpContent, ContentType);
-
                 return await SendAsync<TResponse>(request, token).ConfigureAwait(false);
             }
         }

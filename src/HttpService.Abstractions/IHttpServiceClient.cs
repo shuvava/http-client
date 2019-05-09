@@ -15,7 +15,8 @@ namespace HttpService.Abstractions
             HttpMethod httpMethod,
             string absoluteUrl,
             HttpContent content = default,
-            MediaTypeWithQualityHeaderValue acceptedContentType = default);
+            MediaTypeWithQualityHeaderValue acceptedContentType = default,
+            AuthenticationHeaderValue authHeader = default);
 
 
         Task<string> ProcessResponseAsync(HttpResponseMessage response);

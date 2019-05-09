@@ -1,5 +1,8 @@
 using System;
+using System.Net;
 using System.Net.Http;
+
+using HttpService.Abstractions.Exceptions;
 
 
 namespace HttpService
@@ -44,6 +47,37 @@ namespace HttpService
 
             return uri.ToString();
 
+        }
+
+        public static void AssertResponse(HttpResponseMessage response)
+        {
+            if (response.IsSuccessStatusCode ||
+                response.StatusCode == HttpStatusCode.NotFound
+                || response.StatusCode == HttpStatusCode.NoContent
+                || response.StatusCode == HttpStatusCode.NotModified)
+            {
+                return;
+            }
+
+            response.Content?.Dispose();
+
+            throw new HttpException(response.StatusCode, response.ReasonPhrase);
+        }
+
+        public static bool ResponseHasContent(HttpResponseMessage response)
+        {
+            if (response.StatusCode == HttpStatusCode.NotFound
+                || response.StatusCode == HttpStatusCode.NoContent
+                || response.StatusCode == HttpStatusCode.NotModified)
+            {
+                return false;
+            }
+
+            return response.Content.Headers.ContentType != null ||
+                   (
+                       response.Content.Headers.ContentLength != null &&
+                       response.Content.Headers.ContentLength.Value > 0
+                   );
         }
     }
 }
