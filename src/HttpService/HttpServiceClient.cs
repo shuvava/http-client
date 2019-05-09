@@ -108,16 +108,19 @@ namespace HttpService
         {
             HttpResponseMessage response = null;
             Stream stream = null;
+
             try
             {
                 response = await Client.SendAsync(httpRequest, token).ConfigureAwait(false);
                 stream = await ProcessResponseAsStreamAsync(response).ConfigureAwait(false);
+
                 return new HttpStream(stream, response);
             }
             catch (Exception)
             {
-                response?.Dispose();
                 stream?.Dispose();
+                response?.Dispose();
+
                 throw;
             }
         }
@@ -127,12 +130,12 @@ namespace HttpService
         {
             HttpUtils.AssertResponse(response);
 
-            if (!HttpUtils.ResponseHasContent(response))
+            if (HttpUtils.ResponseHasContent(response))
             {
-                return Task.FromResult(default(string));
+                return response.Content.ReadAsStringAsync();
             }
 
-            return response.Content.ReadAsStringAsync();
+            return Task.FromResult(default(string));
         }
 
 
@@ -140,12 +143,12 @@ namespace HttpService
         {
             HttpUtils.AssertResponse(response);
 
-            if (!HttpUtils.ResponseHasContent(response))
+            if (HttpUtils.ResponseHasContent(response))
             {
-                return Task.FromResult(Stream.Null);
+                return response.Content.ReadAsStreamAsync();
             }
 
-            return response.Content.ReadAsStreamAsync();
+            return Task.FromResult(Stream.Null);
         }
     }
 }
