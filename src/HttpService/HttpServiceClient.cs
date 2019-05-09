@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -90,29 +91,61 @@ namespace HttpService
         }
 
 
-        public async Task<string> ProcessResponseAsync(HttpResponseMessage response)
-        {
-            HttpUtils.AssertResponse(response);
-
-            if (!HttpUtils.ResponseHasContent(response))
-            {
-                return default;
-            }
-
-            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            return content;
-        }
-
-
-        public async Task<string> SendAsync(
+        public async Task<string> GetResponseAsStringAsync(
             HttpRequestMessage httpRequest,
             CancellationToken token = default)
         {
             using (var response = await Client.SendAsync(httpRequest, token).ConfigureAwait(false))
             {
-                return await ProcessResponseAsync(response).ConfigureAwait(false);
+                return await ProcessResponseAsStringAsync(response).ConfigureAwait(false);
             }
+        }
+
+
+        public async Task<Stream> GetResponseAsStreamAsync(
+            HttpRequestMessage httpRequest,
+            CancellationToken token = default)
+        {
+            HttpResponseMessage response = null;
+            Stream stream = null;
+            try
+            {
+                response = await Client.SendAsync(httpRequest, token).ConfigureAwait(false);
+                stream = await ProcessResponseAsStreamAsync(response).ConfigureAwait(false);
+                return new HttpStream(stream, response);
+            }
+            catch (Exception)
+            {
+                response?.Dispose();
+                stream?.Dispose();
+                throw;
+            }
+        }
+
+
+        public Task<string> ProcessResponseAsStringAsync(HttpResponseMessage response)
+        {
+            HttpUtils.AssertResponse(response);
+
+            if (!HttpUtils.ResponseHasContent(response))
+            {
+                return Task.FromResult(default(string));
+            }
+
+            return response.Content.ReadAsStringAsync();
+        }
+
+
+        public Task<Stream> ProcessResponseAsStreamAsync(HttpResponseMessage response)
+        {
+            HttpUtils.AssertResponse(response);
+
+            if (!HttpUtils.ResponseHasContent(response))
+            {
+                return Task.FromResult(Stream.Null);
+            }
+
+            return response.Content.ReadAsStreamAsync();
         }
     }
 }

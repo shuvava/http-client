@@ -1,3 +1,4 @@
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -18,11 +19,11 @@ namespace HttpService.Abstractions
             MediaTypeWithQualityHeaderValue acceptedContentType = default,
             AuthenticationHeaderValue authHeader = default);
 
+        Task<string> GetResponseAsStringAsync(
+            HttpRequestMessage httpRequest,
+            CancellationToken token = default);
 
-        Task<string> ProcessResponseAsync(HttpResponseMessage response);
-
-
-        Task<string> SendAsync(
+        Task<Stream> GetResponseAsStreamAsync(
             HttpRequestMessage httpRequest,
             CancellationToken token = default);
     }

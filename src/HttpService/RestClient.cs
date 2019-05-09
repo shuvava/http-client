@@ -85,14 +85,14 @@ namespace HttpService
         {
             await AddRequestHeadersAsync(httpRequest.Headers).ConfigureAwait(false);
 
-            var result = await SendAsync(httpRequest, token).ConfigureAwait(false);
+            var result = await GetResponseAsStringAsync(httpRequest, token).ConfigureAwait(false);
 
             if (result == null)
             {
                 return default;
             }
 
-            return (TResponse) Serializer.Deserialize(result, typeof(TResponse));
+            return Serializer.Deserialize<TResponse>(result);
         }
     }
 }

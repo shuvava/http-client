@@ -52,7 +52,7 @@ namespace HttpService.Bearer
 
             var content = new FormUrlEncodedContent(authParam);
             var request = CreateRequest(HttpMethod.Post, _authOptions.Url, content, ContentType);
-            var result = await SendAsync(request).ConfigureAwait(false);
+            var result = await GetResponseAsStringAsync(request).ConfigureAwait(false);
 
             var resultData = JsonConvert.DeserializeObject<BearerResponse>(result);
 
