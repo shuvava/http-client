@@ -16,12 +16,12 @@
         <NewtonsoftJson>12.0.1</NewtonsoftJson>
         <Moq>4.10.1</Moq>
         <MsOptions>2.1.1</MsOptions>
-        <MsDI>2.1.1</MsDI>
+        <MsDI>2.2.0</MsDI>
         <MsHttp>2.1.1</MsHttp>
     </PropertyGroup>
 
     <PropertyGroup>
         <OutputPath>$(SolutionDir)build\$(MSBuildProjectName)\bin\$(Configuration)</OutputPath>
-        <BaseIntermediateOutputPath>..\..\build\$(MSBuildProjectName)\obj</BaseIntermediateOutputPath>
+        <BaseIntermediateOutputPath>$(SolutionDir)\build\$(MSBuildProjectName)\obj</BaseIntermediateOutputPath>
     </PropertyGroup>
 </Project>
