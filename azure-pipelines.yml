@@ -1,0 +1,94 @@
+trigger:
+- master
+
+pool:
+  name: Hosted VS2017
+  demands:
+  - msbuild
+  - visualstudio
+  - vstest
+
+steps:
+- task: NuGetToolInstaller@0
+  displayName: 'Use NuGet 4.4.1'
+  inputs:
+    versionSpec: 4.4.1
+
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
+  inputs:
+    restoreSolution: '**\*.sln'
+
+- task: VSBuild@1
+  displayName: 'Build solution'
+  inputs:
+    solution: '**\*.sln'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactstagingdirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+
+- task: VSTest@2
+  displayName: 'Test Assemblies'
+  inputs:
+    testAssemblyVer2: |
+     bin\**\$(BuildConfiguration)\**\*tests.dll
+     !**\obj\**
+     !**\*TestAdapter.dll
+    vsTestVersion: 15.0
+    runInParallel: true
+    codeCoverageEnabled: true
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+
+- task: VSTest@2
+  displayName: 'VsTest - testAssemblies'
+  inputs:
+    testAssemblyVer2: |
+     bin\**\$(BuildConfiguration)\**\*tests.dll
+     !**\*TestAdapter.dll
+     !**\obj\**
+    runInParallel: true
+    codeCoverageEnabled: true
+  enabled: false
+
+- script: |
+   echo Write your commands here
+
+   echo Use the environment variables input below to pass secret variables to this script
+   dir $(System.DefaultWorkingDirectory)\build
+   dir $(System.DefaultWorkingDirectory)\build\HttpService.Abstractions\bin
+   dir $(System.DefaultWorkingDirectory)\build\HttpService.Abstractions\bin\Release
+   dir $(System.DefaultWorkingDirectory)\build\HttpService.Abstractions\bin\Release\netstandard2.0
+
+  displayName: 'Command Line Script'
+
+- task: NuGetCommand@2
+  displayName: 'NuGet pack'
+  inputs:
+    command: pack
+    packagesToPack: '$(System.DefaultWorkingDirectory)\build\**\bin\Release\**\.nuspec;!$(System.DefaultWorkingDirectory)\build\*Tests\bin\Release\**\.nuspec;'
+    packDestination: '$(System.DefaultWorkingDirectory)'
+
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
+  inputs:
+    command: push
+    packagesToPush: '$(System.DefaultWorkingDirectory)/bin/**/$(BuildConfiguration)/**/*.nupkg;!$(System.DefaultWorkingDirectory)/bin/**/$(BuildConfiguration)/**/*.symbols.nupkg'
+    nuGetFeedType: external
+    publishFeedCredentials: NuGet
+  enabled: false
+
+- task: PublishSymbols@2
+  displayName: 'Publish symbols path'
+  inputs:
+    SearchPattern: '**\bin\**\*.pdb'
+    PublishSymbols: false
+  enabled: false
+  continueOnError: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+    ArtifactName: '$(Parameters.ArtifactName)'
+  enabled: false
