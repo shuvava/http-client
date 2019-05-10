@@ -31,7 +31,7 @@ steps:
   displayName: 'Test Assemblies'
   inputs:
     testAssemblyVer2: |
-     bin\**\$(BuildConfiguration)\**\*tests.dll
+     build\**\bin\$(BuildConfiguration)\**\*tests.dll
      !**\obj\**
      !**\*TestAdapter.dll
     vsTestVersion: 15.0
@@ -40,25 +40,14 @@ steps:
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
 
-- task: VSTest@2
-  displayName: 'VsTest - testAssemblies'
-  inputs:
-    testAssemblyVer2: |
-     bin\**\$(BuildConfiguration)\**\*tests.dll
-     !**\*TestAdapter.dll
-     !**\obj\**
-    runInParallel: true
-    codeCoverageEnabled: true
-  enabled: false
-
 - script: |
    echo Write your commands here
 
    echo Use the environment variables input below to pass secret variables to this script
    dir $(System.DefaultWorkingDirectory)\build
    dir $(System.DefaultWorkingDirectory)\build\HttpService.Abstractions\bin
-   dir $(System.DefaultWorkingDirectory)\build\HttpService.Abstractions\bin\Release
-   dir $(System.DefaultWorkingDirectory)\build\HttpService.Abstractions\bin\Release\netstandard2.0
+   dir $(System.DefaultWorkingDirectory)\build\HttpService.Abstractions\bin\$(BuildConfiguration)
+   dir $(System.DefaultWorkingDirectory)\build\HttpService.Abstractions\bin\$(BuildConfiguration)\netstandard2.0
 
   displayName: 'Command Line Script'
 
@@ -66,14 +55,14 @@ steps:
   displayName: 'NuGet pack'
   inputs:
     command: pack
-    packagesToPack: '$(System.DefaultWorkingDirectory)\build\**\bin\Release\**\.nuspec;!$(System.DefaultWorkingDirectory)\build\*Tests\bin\Release\**\.nuspec;'
+    packagesToPack: '$(System.DefaultWorkingDirectory)\build\**\bin\$(BuildConfiguration)\**\.nuspec;!$(System.DefaultWorkingDirectory)\build\*Tests\bin\$(BuildConfiguration)\**\.nuspec;'
     packDestination: '$(System.DefaultWorkingDirectory)'
 
 - task: NuGetCommand@2
   displayName: 'NuGet push'
   inputs:
     command: push
-    packagesToPush: '$(System.DefaultWorkingDirectory)/bin/**/$(BuildConfiguration)/**/*.nupkg;!$(System.DefaultWorkingDirectory)/bin/**/$(BuildConfiguration)/**/*.symbols.nupkg'
+    packagesToPush: '$(System.DefaultWorkingDirectory)/build/**/bin/$(BuildConfiguration)/**/*.nupkg;!$(System.DefaultWorkingDirectory)/build/**/bin/$(BuildConfiguration)/**/*.symbols.nupkg'
     nuGetFeedType: external
     publishFeedCredentials: NuGet
   enabled: false
@@ -81,7 +70,7 @@ steps:
 - task: PublishSymbols@2
   displayName: 'Publish symbols path'
   inputs:
-    SearchPattern: '**\bin\**\*.pdb'
+    SearchPattern: 'build\**\bin\$(BuildConfiguration)\**\*.pdb'
     PublishSymbols: false
   enabled: false
   continueOnError: true

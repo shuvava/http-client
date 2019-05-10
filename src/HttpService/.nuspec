@@ -15,11 +15,11 @@
 
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
-        <description>HTTP REST Client</description>
+        <description>HTTP Client (REST, Stream)</description>
 
 
         <!-- Tags appear in the gallery and can be used for tag searches -->
-        <tags>HttpClient http rest</tags>
+        <tags>Http client, rest, stream</tags>
 
         <!-- Dependencies are automatically installed when the package is installed -->
         <dependencies>

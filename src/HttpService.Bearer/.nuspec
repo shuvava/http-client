@@ -17,7 +17,7 @@
 
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
-        <description>HTTP REST Client with Bearer authorization</description>
+        <description>HTTP Client (REST, Stream) with Bearer authorization</description>
 
 
         <!-- Tags appear in the gallery and can be used for tag searches -->
