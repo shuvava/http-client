@@ -39,7 +39,7 @@ namespace HttpService.ExampleWithPolly
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Global handler: Error");
             }

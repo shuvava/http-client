@@ -97,7 +97,9 @@ namespace HttpService
         {
             using (var response = await Client.SendAsync(httpRequest, token).ConfigureAwait(false))
             {
-                return await ProcessResponseAsStringAsync(response).ConfigureAwait(false);
+                await HttpUtils.AssertResponseAsync(response);
+
+                return await HttpUtils.ProcessResponseAsStringAsync(response).ConfigureAwait(false);
             }
         }
 
@@ -112,7 +114,8 @@ namespace HttpService
             try
             {
                 response = await Client.SendAsync(httpRequest, token).ConfigureAwait(false);
-                stream = await ProcessResponseAsStreamAsync(response).ConfigureAwait(false);
+                HttpUtils.AssertResponseAsync(response).Wait(token);
+                stream = await HttpUtils.ProcessResponseAsStreamAsync(response).ConfigureAwait(false);
 
                 return new HttpStream(stream, response);
             }
@@ -123,32 +126,6 @@ namespace HttpService
 
                 throw;
             }
-        }
-
-
-        public Task<string> ProcessResponseAsStringAsync(HttpResponseMessage response)
-        {
-            HttpUtils.AssertResponse(response);
-
-            if (HttpUtils.ResponseHasContent(response))
-            {
-                return response.Content.ReadAsStringAsync();
-            }
-
-            return Task.FromResult(default(string));
-        }
-
-
-        public Task<Stream> ProcessResponseAsStreamAsync(HttpResponseMessage response)
-        {
-            HttpUtils.AssertResponse(response);
-
-            if (HttpUtils.ResponseHasContent(response))
-            {
-                return response.Content.ReadAsStreamAsync();
-            }
-
-            return Task.FromResult(Stream.Null);
         }
     }
 }
