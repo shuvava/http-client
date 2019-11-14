@@ -13,11 +13,11 @@
         <Copyright>shuvava</Copyright>
     </PropertyGroup>
     <PropertyGroup>
-        <NewtonsoftJson>12.0.2</NewtonsoftJson>
-        <Moq>4.10.1</Moq>
-        <MsOptions>2.2.0</MsOptions>
-        <MsDI>2.2.0</MsDI>
-        <MsHttp>2.1.1</MsHttp>
+        <NewtonsoftJson>12.0.3</NewtonsoftJson>
+        <Moq>4.13.1</Moq>
+        <MsOptions>3.0.0</MsOptions>
+        <MsDI>3.0.0</MsDI>
+        <MsHttp>3.0.0</MsHttp>
     </PropertyGroup>
 
     <PropertyGroup>

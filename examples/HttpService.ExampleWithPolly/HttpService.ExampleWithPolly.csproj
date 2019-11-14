@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -9,8 +9,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="$(MsDI)" />
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="$(MsHttp)" />
-    <PackageReference Include="RestServiceClient" Version="1.0.0" />
-    <PackageReference Include="RestServiceClient.Abstractions" Version="1.0.0" />
+    <PackageReference Include="RestServiceClient" Version="1.0.1" />
+    <PackageReference Include="RestServiceClient.Abstractions" Version="1.0.1" />
   </ItemGroup>
 
 </Project>
