@@ -11,6 +11,11 @@
         <Company>shuvava</Company>
         <LangVersion>latest</LangVersion>
         <Copyright>shuvava</Copyright>
+        <Authors>shuvava</Authors>
+        <PackageProjectUrl>https://github.com/shuvava/http-client</PackageProjectUrl>
+        <PackageLicenseUrl>https://raw.githubusercontent.com/shuvava/http-client/master/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/shuvava/http-client</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
     <PropertyGroup>
         <NewtonsoftJson>12.0.3</NewtonsoftJson>

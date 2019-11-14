@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <PackageId>RestServiceClient.Bearer</PackageId>
+    <PackageVersion>2.0.0</PackageVersion>
+    <Description>HTTP Client (REST, Stream) with Bearer authorization</Description>
+    <PackageTags>HTTP REST Client Bearer auth</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,12 +16,6 @@
   <ItemGroup>
     <ProjectReference Include="..\HttpService.Abstractions\HttpService.Abstractions.csproj" />
     <ProjectReference Include="..\HttpService\HttpService.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update=".nuspec">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

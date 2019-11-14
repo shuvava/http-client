@@ -2,11 +2,7 @@ trigger:
 - master
 
 pool:
-  name: Hosted VS2017
-  demands:
-  - msbuild
-  - visualstudio
-  - vstest
+  vmImage: 'windows-latest'
 
 steps:
 - task: NuGetToolInstaller@0
@@ -34,20 +30,18 @@ steps:
      build\**\bin\$(BuildConfiguration)\**\*tests.dll
      !**\obj\**
      !**\*TestAdapter.dll
-    vsTestVersion: 15.0
     runInParallel: true
     codeCoverageEnabled: true
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
 
 - script: |
-   echo Write your commands here
-
    echo Use the environment variables input below to pass secret variables to this script
    dir $(System.DefaultWorkingDirectory)\build
    dir $(System.DefaultWorkingDirectory)\build\HttpService.Abstractions\bin
    dir $(System.DefaultWorkingDirectory)\build\HttpService.Abstractions\bin\$(BuildConfiguration)
    dir $(System.DefaultWorkingDirectory)\build\HttpService.Abstractions\bin\$(BuildConfiguration)\netstandard2.0
+   dir $(System.DefaultWorkingDirectory)\build\HttpService.Abstractions\bin\$(BuildConfiguration)\netstandard2.1
 
   displayName: 'Command Line Script'
 
@@ -55,14 +49,14 @@ steps:
   displayName: 'NuGet pack'
   inputs:
     command: pack
-    packagesToPack: '$(System.DefaultWorkingDirectory)\build\**\bin\$(BuildConfiguration)\**\.nuspec;!$(System.DefaultWorkingDirectory)\build\*Tests\bin\$(BuildConfiguration)\**\.nuspec;'
+    packagesToPack: '$(System.DefaultWorkingDirectory)\src\**\.nuspec;'
     packDestination: '$(System.DefaultWorkingDirectory)'
 
 - task: NuGetCommand@2
   displayName: 'NuGet push'
   inputs:
     command: push
-    packagesToPush: '$(System.DefaultWorkingDirectory)/build/**/bin/$(BuildConfiguration)/**/*.nupkg;!$(System.DefaultWorkingDirectory)/build/**/bin/$(BuildConfiguration)/**/*.symbols.nupkg'
+    packagesToPush: '$(System.DefaultWorkingDirectory)\src\**\.nuspec;'
     nuGetFeedType: external
     publishFeedCredentials: NuGet
   enabled: false

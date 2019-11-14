@@ -3,6 +3,10 @@
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <PackageId>RestServiceClient</PackageId>
+    <PackageVersion>2.0.0</PackageVersion>
+    <Description>HTTP Client (REST, Stream)</Description>
+    <PackageTags>Http client, rest, stream</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,11 +16,4 @@
   <ItemGroup>
     <ProjectReference Include="..\HttpService.Abstractions\HttpService.Abstractions.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update=".nuspec">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

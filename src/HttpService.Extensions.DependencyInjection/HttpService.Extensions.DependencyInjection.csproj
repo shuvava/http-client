@@ -1,7 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+        <Title>HttpService.Extensions.DependencyInjection</Title>
+        <Description>HTTP REST Client DependencyInjection for HttpClient</Description>
+        <PackageTags>HttpClient http DependencyInjection RequestId</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>

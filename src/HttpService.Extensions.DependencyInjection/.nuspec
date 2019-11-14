@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd ">
     <metadata>
         <!-- The identifier that must be unique within the hosting gallery -->
-        <id>RestServiceClient.Abstractions</id>
+        <id>RestServiceClient.Extensions.DependencyInjection</id>
 
         <!-- The package version number that is used when resolving dependencies -->
         <version>2.0.0</version>
@@ -18,26 +18,28 @@
 
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
-        <description>HTTP REST Client abstractions for HttpClient</description>
+        <description>HTTP REST Client DependencyInjection for HttpClient</description>
 
 
         <!-- Tags appear in the gallery and can be used for tag searches -->
-        <tags>HttpClient http abstractions</tags>
+        <tags>HttpClient http DependencyInjection RequestId</tags>
         <dependencies>
             <group targetFramework=".NETStandard2.0">
+                <dependency id="Microsoft.AspNetCore.Http.Abstractions" version="2.2.0" exclude="Build,Analyzers" />
             </group>
             <group targetFramework=".NETStandard2.1">
+                <dependency id="Microsoft.AspNetCore.Http.Abstractions" version="2.2.0" exclude="Build,Analyzers" />
             </group>
         </dependencies>
     </metadata>
     <files>
-        <file src="..\..\build\HttpService.Abstractions\bin\$Configuration$\netstandard2.0\HttpService.*.dll"
+        <file src="..\..\build\HttpService.Extensions.DependencyInjection\bin\$Configuration$\netstandard2.0\HttpService.*.dll"
               target="lib\netstandard2.0"/>
-        <file src="..\..\build\HttpService.Abstractions\bin\$Configuration$\netstandard2.0\HttpService.*.pdb"
+        <file src="..\..\build\HttpService.Extensions.DependencyInjection\bin\$Configuration$\netstandard2.0\HttpService.*.pdb"
               target="lib\netstandard2.0"/>
-        <file src="..\..\build\HttpService.Abstractions\bin\$Configuration$\netstandard2.1\HttpService.*.dll"
+        <file src="..\..\build\HttpService.Extensions.DependencyInjection\bin\$Configuration$\netstandard2.1\HttpService.*.dll"
               target="lib\netstandard2.1"/>
-        <file src="..\..\build\HttpService.Abstractions\bin\$Configuration$\netstandard2.1\HttpService.*.pdb"
+        <file src="..\..\build\HttpService.Extensions.DependencyInjection\bin\$Configuration$\netstandard2.1\HttpService.*.pdb"
               target="lib\netstandard2.1"/>
     </files>
 </package>
